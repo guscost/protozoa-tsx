@@ -5,7 +5,7 @@
 /*@internal*/
 namespace ts {
     export function transformJsx(context: TransformationContext) {
-        // const compilerOptions = context.getCompilerOptions();
+        const compilerOptions = context.getCompilerOptions();
 
         return transformSourceFile;
 
@@ -77,77 +77,76 @@ namespace ts {
             return visitJsxOpeningLikeElement(node, /*children*/ undefined, isChild, /*location*/ node);
         }
 
-        // function visitJsxOpeningLikeElement(node: JsxOpeningLikeElement, children: JsxChild[], isChild: boolean, location: TextRange) {
-        //     const tagName = getTagName(node);
-        //     let objectProperties: Expression;
-        //     const attrs = node.attributes.properties;
-        //     if (attrs.length === 0) {
-        //         // When there are no attributes, React wants "null"
-        //         objectProperties = createNull();
-        //     }
-        //     else {
-        //         // Map spans of JsxAttribute nodes into object literals and spans
-        //         // of JsxSpreadAttribute nodes into expressions.
-        //         const segments = flatten(
-        //             spanMap(attrs, isJsxSpreadAttribute, (attrs, isSpread) => isSpread
-        //                 ? map(attrs, transformJsxSpreadAttributeToExpression)
-        //                 : createObjectLiteral(map(attrs, transformJsxAttributeToObjectLiteralElement))
-        //             )
-        //         );
-
-        //         if (isJsxSpreadAttribute(attrs[0])) {
-        //             // We must always emit at least one object literal before a spread
-        //             // argument.
-        //             segments.unshift(createObjectLiteral());
-        //         }
-
-        //         // Either emit one big object literal (no spread attribs), or
-        //         // a call to the __assign helper.
-        //         objectProperties = singleOrUndefined(segments);
-        //         if (!objectProperties) {
-        //             objectProperties = createAssignHelper(context, segments);
-        //         }
-        //     }
-
-        //     const element = createExpressionForJsxElement(
-        //         context.getEmitResolver().getJsxFactoryEntity(),
-        //         compilerOptions.reactNamespace,
-        //         tagName,
-        //         objectProperties,
-        //         filter(map(children, transformJsxChildToExpression), isDefined),
-        //         node,
-        //         location
-        //     );
-
-        //     if (isChild) {
-        //         startOnNewLine(element);
-        //     }
-
-        //     return element;
-        // }
-
-        // function transformJsxSpreadAttributeToExpression(node: JsxSpreadAttribute) {
-        //     return visitNode(node.expression, visitor, isExpression);
-        // }
-
-        // TODO: Make this configurable, right now it's just commenting out the React part and using Protozoa
         function visitJsxOpeningLikeElement(node: JsxOpeningLikeElement, children: JsxChild[], isChild: boolean, location: TextRange) {
-            const tagName = getTagName(node);
-            const attrs = node.attributes.properties;
-            const element = createJsonForJsxElement(
-                'tag',
-                'ch',
-                tagName,
-                map(attrs, transformJsxAttributeToObjectLiteralElement),
-                filter(map(children, transformJsxChildToExpression), isDefined),
-                location
-            );
+            if (compilerOptions.jsx === JsxEmit.Protozoa) {
+                const tagName = getTagName(node);
+                const attrs = node.attributes.properties;
+                const element = createJsonForJsxElement(
+                    'tag',
+                    'ch',
+                    tagName,
+                    map(attrs, transformJsxAttributeToObjectLiteralElement),
+                    filter(map(children, transformJsxChildToExpression), isDefined),
+                    location
+                );
 
-            if (isChild) {
-                startOnNewLine(element);
+                if (isChild) {
+                    startOnNewLine(element);
+                }
+
+                return element;
+            } else {
+                const tagName = getTagName(node);
+                let objectProperties: Expression;
+                const attrs = node.attributes.properties;
+                if (attrs.length === 0) {
+                    // When there are no attributes, React wants "null"
+                    objectProperties = createNull();
+                }
+                else {
+                    // Map spans of JsxAttribute nodes into object literals and spans
+                    // of JsxSpreadAttribute nodes into expressions.
+                    const segments = flatten(
+                        spanMap(attrs, isJsxSpreadAttribute, (attrs, isSpread) => isSpread
+                            ? map(attrs, transformJsxSpreadAttributeToExpression)
+                            : createObjectLiteral(map(attrs, transformJsxAttributeToObjectLiteralElement))
+                        )
+                    );
+
+                    if (isJsxSpreadAttribute(attrs[0])) {
+                        // We must always emit at least one object literal before a spread
+                        // argument.
+                        segments.unshift(createObjectLiteral());
+                    }
+
+                    // Either emit one big object literal (no spread attribs), or
+                    // a call to the __assign helper.
+                    objectProperties = singleOrUndefined(segments);
+                    if (!objectProperties) {
+                        objectProperties = createAssignHelper(context, segments);
+                    }
+                }
+
+                const element = createExpressionForJsxElement(
+                    context.getEmitResolver().getJsxFactoryEntity(),
+                    compilerOptions.reactNamespace,
+                    tagName,
+                    objectProperties,
+                    filter(map(children, transformJsxChildToExpression), isDefined),
+                    node,
+                    location
+                );
+
+                if (isChild) {
+                    startOnNewLine(element);
+                }
+
+                return element;
             }
+        }
 
-            return element;
+        function transformJsxSpreadAttributeToExpression(node: JsxSpreadAttribute) {
+            return visitNode(node.expression, visitor, isExpression);
         }
 
         function transformJsxAttributeToObjectLiteralElement(node: JsxAttribute) {
