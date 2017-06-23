@@ -2,9 +2,15 @@
 [![npm version](https://badge.fury.io/js/typescript.svg)](https://www.npmjs.com/package/typescript)
 [![Downloads](https://img.shields.io/npm/dm/typescript.svg)](https://www.npmjs.com/package/typescript)
 
-# TypeScript
+# Protozoa-TSX
 
 [![Join the chat at https://gitter.im/Microsoft/TypeScript](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Microsoft/TypeScript?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+Protozoa-TSX is a variety of the TypeScript compiler with an option to compile JSX into an object literal format compatible with [Protozoa](https://github.com/guscost/protozoa). Usage example:
+
+```
+tsc --jsx protozoa input.js output.js
+```
 
 [TypeScript](http://www.typescriptlang.org/) is a language for application-scale JavaScript. TypeScript adds optional types, classes, and modules to JavaScript. TypeScript supports tools for large-scale JavaScript applications for any browser, for any host, on any OS. TypeScript compiles to readable, standards-based JavaScript. Try it out at the [playground](http://www.typescriptlang.org/Playground), and stay up to date via [our blog](https://blogs.msdn.microsoft.com/typescript) and [Twitter account](https://twitter.com/typescriptlang).
 
@@ -13,13 +19,7 @@
 For the latest stable version:
 
 ```
-npm install -g typescript
-```
-
-For our nightly builds:
-
-```
-npm install -g typescript@next
+npm install -g protozoa-tsx
 ```
 
 ## Contribute
