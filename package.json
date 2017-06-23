@@ -1,10 +1,10 @@
 {
   "name": "protozoa-tsx",
   "author": "Gus Cost",
-  "homepage": "http://typescriptlang.org/",
-  "version": "2.3.9",
+  "homepage": "https://guscost.github.io/protozoa-tsx",
+  "version": "1.0.0",
   "license": "MIT",
-  "description": "TypeScript is a language for application scale JavaScript development (now with Protozoa support)",
+  "description": "Protozoa-TSX is a variety of the TypeScript compiler with an option to compile JSX into an object literal format compatible with Protozoa.",
   "keywords": [
     "TypeScript",
     "Microsoft",
@@ -13,11 +13,11 @@
     "javascript"
   ],
   "bugs": {
-    "url": "https://github.com/Microsoft/TypeScript/issues"
+    "url": "https://github.com/guscost/protozoa-tsx/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Microsoft/TypeScript.git"
+    "url": "https://github.com/guscost/protozoa-tsx.git"
   },
   "main": "./lib/typescript.js",
   "typings": "./lib/typescript.d.ts",

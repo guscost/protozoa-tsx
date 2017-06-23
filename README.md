@@ -9,7 +9,7 @@
 Protozoa-TSX is a variety of the TypeScript compiler with an option to compile JSX into an object literal format compatible with [Protozoa](https://github.com/guscost/protozoa). Usage example:
 
 ```
-./node_modules/protozoa-tsx/bin/tsc --jsx protozoa input.tsx output.js
+./node_modules/protozoa-tsx/bin/tsc --jsx protozoa input.tsx
 ```
 
 [TypeScript](http://www.typescriptlang.org/) is a language for application-scale JavaScript. TypeScript adds optional types, classes, and modules to JavaScript. TypeScript supports tools for large-scale JavaScript applications for any browser, for any host, on any OS. TypeScript compiles to readable, standards-based JavaScript. Try it out at the [playground](http://www.typescriptlang.org/Playground), and stay up to date via [our blog](https://blogs.msdn.microsoft.com/typescript) and [Twitter account](https://twitter.com/typescriptlang).
