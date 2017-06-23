@@ -2180,6 +2180,7 @@ declare namespace ts {
         Preserve = 1,
         React = 2,
         ReactNative = 3,
+        Protozoa = 4,
     }
     enum NewLineKind {
         CarriageReturnLineFeed = 0,
