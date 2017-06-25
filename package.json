@@ -2,7 +2,7 @@
   "name": "protozoa-tsx",
   "author": "Gus Cost",
   "homepage": "https://guscost.github.io/protozoa-tsx",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "description": "Protozoa-TSX is a variety of the TypeScript compiler with an option to compile JSX into an object literal format compatible with Protozoa.",
   "keywords": [
