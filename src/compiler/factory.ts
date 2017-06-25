@@ -2533,12 +2533,18 @@ namespace ts {
         for (const prop of props) {
             propsList.push(prop);
         }
-        const childList = [];
-        for (const child of children) {
-            child.startsOnNewLine = true;
-            childList.push(child);
+        let childrenExpression: Expression;
+        if (children.length === 1) {
+            childrenExpression = children[0];
+        } else { 
+            let childList = [];
+            for (const child of children) {
+                child.startsOnNewLine = true;
+                childList.push(child);
+            }
+            childrenExpression = createArrayLiteral(childList);
         }
-        propsList.push(createPropertyAssignment(jsonChildrenKey, createArrayLiteral(childList)));
+        propsList.push(createPropertyAssignment(jsonChildrenKey, childrenExpression));
         return setTextRange(
             createObjectLiteral(propsList),
             location
